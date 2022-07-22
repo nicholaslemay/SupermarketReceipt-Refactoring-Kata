@@ -10,6 +10,21 @@ namespace SupermarketReceipt
         FiveForAmount
     }
 
+    public static class OfferFactory
+    {
+        public static Offer Build(SpecialOfferType offerType, Product product, double argument)
+        {
+            return offerType switch
+            {
+                TwoForAmount => new TwoForAmountOffer(product, argument),
+                ThreeForTwo => new ThreeForTwoDiscount(product, argument),
+                TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
+                FiveForAmount => new FivePerAmountOffer(product, argument),
+                _ => null
+            };
+        }
+    }
+
     public class Offer
     {
         protected readonly Product _product;

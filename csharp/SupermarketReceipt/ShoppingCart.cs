@@ -22,6 +22,8 @@ namespace SupermarketReceipt
                 .Select(p => CalculateDiscountFor(p, offers, catalog))
                 .Where(d=> d !=null);
 
+        private IEnumerable<Product> UniqueItemsInCart() => _items.Select(i=>i.Product).Distinct();
+
         private Discount CalculateDiscountFor(Product product, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
             if (!offers.ContainsKey(product)) return null;
@@ -31,9 +33,7 @@ namespace SupermarketReceipt
 
             return offer.CalculateDiscount(product, unitPrice, TotalQuantityForProduct(product), this);
         }
-
-        private IEnumerable<Product> UniqueItemsInCart() => _items.Select(i=>i.Product).Distinct();
-
+        
         private double TotalQuantityForProduct(Product product) => _items.Where(i => i.Product == product).Sum(p => p.Quantity);
     }
 }

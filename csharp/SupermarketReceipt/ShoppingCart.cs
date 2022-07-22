@@ -27,21 +27,20 @@ namespace SupermarketReceipt
             if (!offers.ContainsKey(product)) return null;
 
             var unitPrice = catalog.GetUnitPrice(product);
-            var quantityAsInt = (int) TotalQuantityForProduct(product);
-
             var offer = offers[product];
 
-            return CalculateDiscount(offer, product, quantityAsInt, unitPrice);
+            return CalculateDiscount(offer, product, unitPrice, TotalQuantityForProduct(product));
         }
 
-        private Discount CalculateDiscount(Offer offer, Product product, int quantityAsInt, double unitPrice)
+        public Discount CalculateDiscount(Offer offer, Product product, double unitPrice, double totalQuantityForProduct)
         {
+            var quantityAsInt = (int)totalQuantityForProduct;
             return offer.OfferType switch
             {
-                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, unitPrice, TotalQuantityForProduct(product)),
-                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, TotalQuantityForProduct(product), unitPrice),
-                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, TotalQuantityForProduct(product), unitPrice),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, TotalQuantityForProduct(product), offer),
+                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, unitPrice, totalQuantityForProduct),
+                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, totalQuantityForProduct, unitPrice),
+                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, totalQuantityForProduct, unitPrice),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, totalQuantityForProduct, offer),
                 _ => null
             };
         }

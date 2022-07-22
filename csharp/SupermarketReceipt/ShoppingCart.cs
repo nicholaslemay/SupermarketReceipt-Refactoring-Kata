@@ -33,7 +33,7 @@ namespace SupermarketReceipt
             var offer = offers[product];
             var unitPrice = catalog.GetUnitPrice(product);
 
-            var quantityForOfferType = QuantityForOfferType(offer);
+            var quantityForOfferType = QuantityForOfferType(offer.OfferType);
 
             if (offer.OfferType == SpecialOfferType.TwoForAmount)
             {
@@ -63,19 +63,14 @@ namespace SupermarketReceipt
             return discount;
         }
 
-        private static int QuantityForOfferType(Offer offer)
+        private static int QuantityForOfferType(SpecialOfferType offerType)
         {
-            var quantityForOfferType = 1;
-            if (offer.OfferType == SpecialOfferType.ThreeForTwo)
+            return offerType switch
             {
-                quantityForOfferType = 3;
-            }
-            else if (offer.OfferType == SpecialOfferType.TwoForAmount)
-            {
-                quantityForOfferType = 2;
-            }
-
-            return quantityForOfferType;
+                SpecialOfferType.ThreeForTwo => 3,
+                SpecialOfferType.TwoForAmount => 2,
+                _ => 1
+            };
         }
 
         private IEnumerable<Product> UniqueItemsInCart()

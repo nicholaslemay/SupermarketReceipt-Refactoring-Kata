@@ -30,7 +30,7 @@ namespace SupermarketReceipt
             {
                 TwoForAmount => new TwoForAmountOffer(_product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
                 ThreeForTwo => new ThreeForTwoDiscount(_product, Argument).CalcultateDiscountForThreeForTwoDiscount(unitPrice, totalQuantityForProduct),
-                TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
+                SpecialOfferType.TenPercentDiscount => new TenPercentDiscount(_product, Argument).CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
                 FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
                 _ => null
             };
@@ -45,12 +45,19 @@ namespace SupermarketReceipt
             var discountTotal = unitPrice * quantity - (Argument * numberOfDiscountsToApply + quantityAsInt % 5 * unitPrice);
             return new Discount(_product, 5 + " for " + Argument, -discountTotal);
         }
+        
+    }
 
-        private Discount CalcultateDiscountForTenPercentDiscount(double unitPrice, double quantity)
+    class TenPercentDiscount : Offer
+    {
+        public TenPercentDiscount(Product product, double argument) : base(SpecialOfferType.TenPercentDiscount, product, argument)
+        {
+        }
+        
+        public Discount CalcultateDiscountForTenPercentDiscount(double unitPrice, double quantity)
         {
             return new Discount(_product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
         }
-        
     }
 
     class ThreeForTwoDiscount : Offer

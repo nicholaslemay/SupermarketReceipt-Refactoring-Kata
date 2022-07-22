@@ -30,13 +30,20 @@ namespace SupermarketReceipt
             {
                 TwoForAmount => new TwoForAmountOffer(_product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
                 ThreeForTwo => new ThreeForTwoDiscount(_product, Argument).CalcultateDiscountForThreeForTwoDiscount(unitPrice, totalQuantityForProduct),
-                SpecialOfferType.TenPercentDiscount => new TenPercentDiscount(_product, Argument).CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
-                FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
+                TenPercentDiscount => new TenPercentDiscountOffer(_product, Argument).CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
+                FiveForAmount => new FivePerAmountOffer(_product, Argument).CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
                 _ => null
             };
         }
+    }
 
-        private Discount CalcultateDiscountForFivePerAmountDiscount(double unitPrice, double quantity)
+    class FivePerAmountOffer : Offer
+    {
+        public FivePerAmountOffer(Product product, double argument) : base(FiveForAmount, product, argument)
+        {
+        }
+        
+        public Discount CalcultateDiscountForFivePerAmountDiscount(double unitPrice, double quantity)
         {
             var quantityAsInt = (int)quantity;
             if (quantityAsInt < 5)
@@ -45,12 +52,11 @@ namespace SupermarketReceipt
             var discountTotal = unitPrice * quantity - (Argument * numberOfDiscountsToApply + quantityAsInt % 5 * unitPrice);
             return new Discount(_product, 5 + " for " + Argument, -discountTotal);
         }
-        
     }
 
-    class TenPercentDiscount : Offer
+    class TenPercentDiscountOffer : Offer
     {
-        public TenPercentDiscount(Product product, double argument) : base(SpecialOfferType.TenPercentDiscount, product, argument)
+        public TenPercentDiscountOffer(Product product, double argument) : base(TenPercentDiscount, product, argument)
         {
         }
         

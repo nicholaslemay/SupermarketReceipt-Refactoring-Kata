@@ -25,23 +25,21 @@ namespace SupermarketReceipt
         private Discount CalculateDiscountFor(Product product, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
             if (!offers.ContainsKey(product)) return null;
-            
-            var quantity = TotalQuantityForProduct(product);
-            var quantityAsInt = (int) quantity;
 
-            var offer = offers[product];
             var unitPrice = catalog.GetUnitPrice(product);
 
+            var offer = offers[product];
             var quantityForOfferType = QuantityForOfferType(offer.OfferType);
 
+            var quantityAsInt = (int) TotalQuantityForProduct(product);
             var sizeOfBundlesOfOfferType = quantityAsInt / quantityForOfferType;
 
             return offer.OfferType switch
             {
-                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, quantity),
-                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, quantity, unitPrice, sizeOfBundlesOfOfferType),
-                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, quantity, unitPrice),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, quantity, offer, sizeOfBundlesOfOfferType, quantityForOfferType),
+                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, TotalQuantityForProduct(product)),
+                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, TotalQuantityForProduct(product), unitPrice, sizeOfBundlesOfOfferType),
+                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, TotalQuantityForProduct(product), unitPrice),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, TotalQuantityForProduct(product), offer, sizeOfBundlesOfOfferType, quantityForOfferType),
                 _ => null
             };
         }

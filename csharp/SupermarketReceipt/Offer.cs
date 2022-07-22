@@ -25,7 +25,7 @@ namespace SupermarketReceipt
         }
     }
 
-    public class Offer
+    public abstract class Offer
     {
         protected readonly Product _product;
 
@@ -39,17 +39,8 @@ namespace SupermarketReceipt
         protected SpecialOfferType OfferType { get; }
         protected double Argument { get; }
 
-        public virtual Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct)
-        {
-            return OfferType switch
-            {
-                TwoForAmount => new TwoForAmountOffer(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
-                ThreeForTwo => new ThreeForTwoDiscount(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
-                TenPercentDiscount => new TenPercentDiscountOffer(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
-                FiveForAmount => new FivePerAmountOffer(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
-                _ => null
-            };
-        }
+        public abstract Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct);
+
     }
 
     class FivePerAmountOffer : Offer

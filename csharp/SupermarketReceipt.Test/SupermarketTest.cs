@@ -8,13 +8,13 @@ namespace SupermarketReceipt.Test
     [UsesVerify]
     public class SupermarketTest
     {
-        private SupermarketCatalog _catalog;
-        private Teller _teller;
-        private ShoppingCart _theCart;
-        private Product _toothbrush;
-        private Product _rice;
-        private Product _apples;
-        private Product _cherryTomatoes;
+        private readonly SupermarketCatalog _catalog;
+        private readonly Teller _teller;
+        private readonly ShoppingCart _theCart;
+        private readonly Product _toothbrush;
+        private readonly Product _rice;
+        private readonly Product _apples;
+        private readonly Product _cherryTomatoes;
         
         public SupermarketTest()
         {
@@ -36,7 +36,7 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task an_empty_shopping_cart_should_cost_nothing()
         {
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -44,7 +44,7 @@ namespace SupermarketReceipt.Test
         public Task one_normal_item()
         {
             _theCart.AddItem(_toothbrush);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -53,7 +53,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_rice);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -64,7 +64,7 @@ namespace SupermarketReceipt.Test
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
             _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -77,7 +77,7 @@ namespace SupermarketReceipt.Test
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
             _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -85,7 +85,7 @@ namespace SupermarketReceipt.Test
         public Task loose_weight_product()
         {
             _theCart.AddItemQuantity(_apples, .5);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -94,7 +94,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItem(_rice);
             _teller.AddSpecialOffer(SpecialOfferType.TenPercentDiscount, _rice, 10.0);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -104,7 +104,7 @@ namespace SupermarketReceipt.Test
             _theCart.AddItem(_cherryTomatoes);
             _theCart.AddItem(_cherryTomatoes);
             _teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -113,7 +113,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItemQuantity(_apples, 5);
             _teller.AddSpecialOffer(SpecialOfferType.FiveForAmount, _apples, 6.99);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -122,7 +122,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItemQuantity(_apples, 6);
             _teller.AddSpecialOffer(SpecialOfferType.FiveForAmount, _apples, 6.99);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -131,7 +131,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItemQuantity(_apples, 16);
             _teller.AddSpecialOffer(SpecialOfferType.FiveForAmount, _apples, 6.99);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
 
@@ -140,7 +140,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItemQuantity(_apples, 4);
             _teller.AddSpecialOffer(SpecialOfferType.FiveForAmount, _apples, 6.99);
-            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
     }

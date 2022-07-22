@@ -37,12 +37,7 @@ namespace SupermarketReceipt
 
             if (offer.OfferType == SpecialOfferType.TwoForAmount)
             {
-                if (quantityAsInt >= 2)
-                {
-                    var total = offer.Argument * (quantityAsInt / quantityForOfferType) + quantityAsInt % 2 * unitPrice;
-                    var discountN = unitPrice * quantity - total;
-                    discount = new Discount(product, "2 for " + offer.Argument, -discountN);
-                }
+                discount = CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, quantity);
             }
 
             var numberOfXs = quantityAsInt / quantityForOfferType;
@@ -64,6 +59,16 @@ namespace SupermarketReceipt
             }
 
             return discount;
+        }
+
+        private static Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, Offer offer, int quantityForOfferType, double unitPrice, double quantity)
+        {
+            if (quantityAsInt < 2)
+                return null;
+            
+            var total = offer.Argument * (quantityAsInt / quantityForOfferType) + quantityAsInt % 2 * unitPrice;
+            var discountN = unitPrice * quantity - total;
+            return new Discount(product, "2 for " + offer.Argument, -discountN);
         }
 
         private static int QuantityForOfferType(SpecialOfferType offerType)

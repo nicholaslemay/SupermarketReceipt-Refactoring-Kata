@@ -24,14 +24,14 @@ namespace SupermarketReceipt
         protected SpecialOfferType OfferType { get; }
         protected double Argument { get; }
 
-        public Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct)
+        public virtual Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct)
         {
             return OfferType switch
             {
-                TwoForAmount => new TwoForAmountOffer(_product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
-                ThreeForTwo => new ThreeForTwoDiscount(_product, Argument).CalcultateDiscountForThreeForTwoDiscount(unitPrice, totalQuantityForProduct),
-                TenPercentDiscount => new TenPercentDiscountOffer(_product, Argument).CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
-                FiveForAmount => new FivePerAmountOffer(_product, Argument).CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
+                TwoForAmount => new TwoForAmountOffer(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
+                ThreeForTwo => new ThreeForTwoDiscount(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
+                TenPercentDiscount => new TenPercentDiscountOffer(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
+                FiveForAmount => new FivePerAmountOffer(_product, Argument).CalculateDiscount(unitPrice, totalQuantityForProduct),
                 _ => null
             };
         }
@@ -43,7 +43,7 @@ namespace SupermarketReceipt
         {
         }
         
-        public Discount CalcultateDiscountForFivePerAmountDiscount(double unitPrice, double quantity)
+        public override Discount CalculateDiscount(double unitPrice, double quantity)
         {
             var quantityAsInt = (int)quantity;
             if (quantityAsInt < 5)
@@ -60,7 +60,7 @@ namespace SupermarketReceipt
         {
         }
         
-        public Discount CalcultateDiscountForTenPercentDiscount(double unitPrice, double quantity)
+        public override Discount CalculateDiscount(double unitPrice, double quantity)
         {
             return new Discount(_product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
         }
@@ -71,7 +71,7 @@ namespace SupermarketReceipt
         public ThreeForTwoDiscount(Product product, double argument) : base(ThreeForTwo, product, argument)
         {
         }
-        public Discount CalcultateDiscountForThreeForTwoDiscount(double unitPrice, double quantity)
+        public override Discount CalculateDiscount(double unitPrice, double quantity)
         {
             var quantityAsInt = (int)quantity;
             if (quantityAsInt < 3)
@@ -88,7 +88,7 @@ namespace SupermarketReceipt
         {
         }
         
-        public  Discount CalcultateDiscountForTwoForAmount(double unitPrice, double quantity)
+        public override Discount CalculateDiscount(double unitPrice, double quantity)
         {
             var quantityAsInt = (int)quantity;
             if (quantityAsInt < 2)

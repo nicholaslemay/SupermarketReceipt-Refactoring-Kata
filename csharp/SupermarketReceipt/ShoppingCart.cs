@@ -52,13 +52,20 @@ namespace SupermarketReceipt
                 discount = CalcultateDiscountForTenPercentDiscount(product, offer, discount, quantity, unitPrice);
             }
 
-            if (offer.OfferType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5)
+            if (offer.OfferType == SpecialOfferType.FiveForAmount )
             {
-                var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
-                discount = new Discount(product, quantityForOfferType + " for " + offer.Argument, -discountTotal);
+                discount = CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, quantity, offer, sizeOfBundlesOfOfferType, quantityForOfferType);
             }
 
             return discount;
+        }
+
+        private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer, int sizeOfBundlesOfOfferType, int quantityForOfferType)
+        {
+            if (quantityAsInt < 5)
+                return null;
+                var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
+                return new Discount(product, quantityForOfferType + " for " + offer.Argument, -discountTotal);
         }
 
         private static Discount CalcultateDiscountForTenPercentDiscount(Product product, Offer offer, Discount discount, double quantity, double unitPrice)

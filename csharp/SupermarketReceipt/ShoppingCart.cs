@@ -49,9 +49,9 @@ namespace SupermarketReceipt
 
             if (offer.OfferType == SpecialOfferType.TenPercentDiscount)
             {
-                discount = new Discount(product, offer.Argument + "% off", -quantity * unitPrice * offer.Argument / 100.0);    
+                discount = CalcultateDiscountForTenPercentDiscount(product, offer, discount, quantity, unitPrice);
             }
-            
+
             if (offer.OfferType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5)
             {
                 var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
@@ -59,6 +59,11 @@ namespace SupermarketReceipt
             }
 
             return discount;
+        }
+
+        private static Discount CalcultateDiscountForTenPercentDiscount(Product product, Offer offer, Discount discount, double quantity, double unitPrice)
+        {
+            return new Discount(product, offer.Argument + "% off", -quantity * unitPrice * offer.Argument / 100.0);
         }
 
         private static Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, Offer offer, int quantityForOfferType, double unitPrice, double quantity)

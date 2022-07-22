@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SupermarketReceipt
 {
@@ -31,7 +32,7 @@ namespace SupermarketReceipt
         {
             foreach (var p in _productQuantities.Keys)
             {
-                var quantity = _productQuantities[p];
+                var quantity = TotalQuantityForProduct(p);
                 var quantityAsInt = (int) quantity;
                 if (offers.ContainsKey(p))
                 {
@@ -72,7 +73,9 @@ namespace SupermarketReceipt
                     if (discount != null)
                         receipt.AddDiscount(discount);
                 }
+                
             }
         }
+        private double TotalQuantityForProduct(Product product) => _items.Where(i => i.Product == product).Sum(p => p.Quantity);
     }
 }

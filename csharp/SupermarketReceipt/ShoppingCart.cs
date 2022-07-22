@@ -31,31 +31,32 @@ namespace SupermarketReceipt
             var offer = offers[product];
 
             var quantityAsInt = (int) TotalQuantityForProduct(product);
-            var sizeOfBundlesOfOfferType = quantityAsInt / QuantityForOfferType(offer.OfferType);
 
             return offer.OfferType switch
             {
                 SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, unitPrice, TotalQuantityForProduct(product)),
-                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, TotalQuantityForProduct(product), unitPrice, sizeOfBundlesOfOfferType),
+                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, TotalQuantityForProduct(product), unitPrice),
                 SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, TotalQuantityForProduct(product), unitPrice),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, TotalQuantityForProduct(product), offer, sizeOfBundlesOfOfferType),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, TotalQuantityForProduct(product), offer),
                 _ => null
             };
         }
 
-        private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice, int sizeOfBundlesOfOfferType)
+        private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice)
         {
             if (quantityAsInt < 3)
                 return null;
-            var discountAmount = quantity * unitPrice - (sizeOfBundlesOfOfferType * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
+            var numberOfDiscountsToApply = quantityAsInt / 3;
+            var discountAmount = quantity * unitPrice - (numberOfDiscountsToApply * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
             return  new Discount(product, "3 for 2", -discountAmount);
         }
 
-        private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer, int sizeOfBundlesOfOfferType)
+        private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer)
         {
             if (quantityAsInt < 5)
                 return null;
-            var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
+            var numberOfDiscountsToApply = quantityAsInt / 5;
+            var discountTotal = unitPrice * quantity - (offer.Argument * numberOfDiscountsToApply + quantityAsInt % 5 * unitPrice);
             return new Discount(product, 5 + " for " + offer.Argument, -discountTotal);
         }
 
@@ -72,17 +73,6 @@ namespace SupermarketReceipt
             var total = offer.Argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
             var discountN = unitPrice * quantity - total;
             return new Discount(product, "2 for " + offer.Argument, -discountN);
-        }
-
-        private static int QuantityForOfferType(SpecialOfferType offerType)
-        {
-            return offerType switch
-            {
-                SpecialOfferType.ThreeForTwo => 3,
-                SpecialOfferType.TwoForAmount => 2,
-                SpecialOfferType.FiveForAmount => 5,
-                _ => 1
-            };
         }
 
         private IEnumerable<Product> UniqueItemsInCart() => _items.Select(i=>i.Product).Distinct();

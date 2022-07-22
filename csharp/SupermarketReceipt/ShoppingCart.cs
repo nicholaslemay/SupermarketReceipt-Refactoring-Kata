@@ -4,19 +4,13 @@ namespace SupermarketReceipt
 {
     public class ShoppingCart
     {
-        private readonly List<ProductQuantity> _items = new List<ProductQuantity>();
-        private readonly Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
+        private readonly List<ProductQuantity> _items = new();
+        private readonly Dictionary<Product, double> _productQuantities = new();
 
 
-        public List<ProductQuantity> GetItems()
-        {
-            return new List<ProductQuantity>(_items);
-        }
+        public List<ProductQuantity> GetItems() => new(_items);
 
-        public void AddItem(Product product)
-        {
-            AddItemQuantity(product, 1.0);
-        }
+        public void AddItem(Product product) => AddItemQuantity(product, 1.0);
 
 
         public void AddItemQuantity(Product product, double quantity)

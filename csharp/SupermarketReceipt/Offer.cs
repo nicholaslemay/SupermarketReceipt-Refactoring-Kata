@@ -25,7 +25,7 @@ namespace SupermarketReceipt
         public Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct)
         {
             var quantityAsInt = (int)totalQuantityForProduct;
-            return this.OfferType switch
+            return OfferType switch
             {
                 SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(quantityAsInt, unitPrice, totalQuantityForProduct),
                 SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(quantityAsInt, totalQuantityForProduct, unitPrice),

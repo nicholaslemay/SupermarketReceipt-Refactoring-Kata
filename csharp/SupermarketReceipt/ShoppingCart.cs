@@ -18,11 +18,13 @@ namespace SupermarketReceipt
             _items.Add(new ProductQuantity(product, quantity));
         }
 
-        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
-        {
-            var discounts = UniqueItemsInCart().Select(p => CalculateDiscountFor(p, offers, catalog)).Where(d=> d !=null);
-            receipt.AddDiscounts(discounts);
-        }
+        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog) => 
+            receipt.AddDiscounts(AllAvailableDiscountsBasedOn(offers, catalog));
+
+        private IEnumerable<Discount> AllAvailableDiscountsBasedOn(Dictionary<Product, Offer> offers, SupermarketCatalog catalog) => 
+            UniqueItemsInCart()
+                .Select(p => CalculateDiscountFor(p, offers, catalog))
+                .Where(d=> d !=null);
 
         private Discount CalculateDiscountFor(Product product, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {

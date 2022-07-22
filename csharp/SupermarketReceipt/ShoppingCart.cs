@@ -29,17 +29,16 @@ namespace SupermarketReceipt
             var unitPrice = catalog.GetUnitPrice(product);
 
             var offer = offers[product];
-            var quantityForOfferType = QuantityForOfferType(offer.OfferType);
 
             var quantityAsInt = (int) TotalQuantityForProduct(product);
-            var sizeOfBundlesOfOfferType = quantityAsInt / quantityForOfferType;
+            var sizeOfBundlesOfOfferType = quantityAsInt / QuantityForOfferType(offer.OfferType);
 
             return offer.OfferType switch
             {
-                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, TotalQuantityForProduct(product)),
+                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, unitPrice, TotalQuantityForProduct(product)),
                 SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, TotalQuantityForProduct(product), unitPrice, sizeOfBundlesOfOfferType),
                 SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, TotalQuantityForProduct(product), unitPrice),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, TotalQuantityForProduct(product), offer, sizeOfBundlesOfOfferType, quantityForOfferType),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, TotalQuantityForProduct(product), offer, sizeOfBundlesOfOfferType),
                 _ => null
             };
         }
@@ -52,12 +51,12 @@ namespace SupermarketReceipt
             return  new Discount(product, "3 for 2", -discountAmount);
         }
 
-        private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer, int sizeOfBundlesOfOfferType, int quantityForOfferType)
+        private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer, int sizeOfBundlesOfOfferType)
         {
             if (quantityAsInt < 5)
                 return null;
             var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
-            return new Discount(product, quantityForOfferType + " for " + offer.Argument, -discountTotal);
+            return new Discount(product, 5 + " for " + offer.Argument, -discountTotal);
         }
 
         private static Discount CalcultateDiscountForTenPercentDiscount(Product product, Offer offer, double quantity, double unitPrice)
@@ -65,12 +64,12 @@ namespace SupermarketReceipt
             return new Discount(product, offer.Argument + "% off", -quantity * unitPrice * offer.Argument / 100.0);
         }
 
-        private static Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, Offer offer, int quantityForOfferType, double unitPrice, double quantity)
+        private static Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, Offer offer, double unitPrice, double quantity)
         {
             if (quantityAsInt < 2)
                 return null;
             
-            var total = offer.Argument * (quantityAsInt / quantityForOfferType) + quantityAsInt % 2 * unitPrice;
+            var total = offer.Argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
             var discountN = unitPrice * quantity - total;
             return new Discount(product, "2 for " + offer.Argument, -discountN);
         }

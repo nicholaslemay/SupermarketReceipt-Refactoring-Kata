@@ -26,7 +26,7 @@ namespace SupermarketReceipt
         {
             return OfferType switch
             {
-                SpecialOfferType.TwoForAmount => new TwoForAmountOffer(OfferType, _product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
+                SpecialOfferType.TwoForAmount => new TwoForAmountOffer(_product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
                 SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(unitPrice, totalQuantityForProduct),
                 SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
                 SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
@@ -58,22 +58,12 @@ namespace SupermarketReceipt
         {
             return new Discount(_product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
         }
-
-        public  Discount CalcultateDiscountForTwoForAmount(double unitPrice, double quantity)
-        {
-            var quantityAsInt = (int)quantity;
-            if (quantityAsInt < 2)
-                return null;
-            
-            var total = Argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
-            var discountN = unitPrice * quantity - total;
-            return new Discount(_product, "2 for " + Argument, -discountN);
-        }
+        
     }
 
     public class TwoForAmountOffer : Offer
     {
-        public TwoForAmountOffer(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        public TwoForAmountOffer(Product product, double argument) : base(SpecialOfferType.TwoForAmount, product, argument)
         {
         }
         

@@ -26,7 +26,6 @@ namespace SupermarketReceipt
         {
             if (!offers.ContainsKey(product)) return null;
             
-            Discount discount = null;
             var quantity = TotalQuantityForProduct(product);
             var quantityAsInt = (int) quantity;
 
@@ -40,14 +39,14 @@ namespace SupermarketReceipt
             return offer.OfferType switch
             {
                 SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, quantity),
-                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, quantity, unitPrice, sizeOfBundlesOfOfferType, discount),
-                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, discount, quantity, unitPrice),
+                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, quantity, unitPrice, sizeOfBundlesOfOfferType),
+                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, quantity, unitPrice),
                 SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, quantity, offer, sizeOfBundlesOfOfferType, quantityForOfferType),
-                _ => discount
+                _ => null
             };
         }
 
-        private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice, int sizeOfBundlesOfOfferType, Discount discount)
+        private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice, int sizeOfBundlesOfOfferType)
         {
             if (quantityAsInt < 3)
                 return null;
@@ -59,11 +58,11 @@ namespace SupermarketReceipt
         {
             if (quantityAsInt < 5)
                 return null;
-                var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
-                return new Discount(product, quantityForOfferType + " for " + offer.Argument, -discountTotal);
+            var discountTotal = unitPrice * quantity - (offer.Argument * sizeOfBundlesOfOfferType + quantityAsInt % 5 * unitPrice);
+            return new Discount(product, quantityForOfferType + " for " + offer.Argument, -discountTotal);
         }
 
-        private static Discount CalcultateDiscountForTenPercentDiscount(Product product, Offer offer, Discount discount, double quantity, double unitPrice)
+        private static Discount CalcultateDiscountForTenPercentDiscount(Product product, Offer offer, double quantity, double unitPrice)
         {
             return new Discount(product, offer.Argument + "% off", -quantity * unitPrice * offer.Argument / 100.0);
         }

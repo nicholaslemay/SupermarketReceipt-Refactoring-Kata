@@ -27,10 +27,10 @@ namespace SupermarketReceipt
             var quantityAsInt = (int)totalQuantityForProduct;
             return this.OfferType switch
             {
-                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, this, unitPrice, totalQuantityForProduct),
+                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, unitPrice, totalQuantityForProduct),
                 SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, totalQuantityForProduct, unitPrice),
-                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, this, totalQuantityForProduct, unitPrice),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, totalQuantityForProduct, this),
+                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product,  totalQuantityForProduct, unitPrice),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, totalQuantityForProduct),
                 _ => null
             };
         }
@@ -44,28 +44,28 @@ namespace SupermarketReceipt
             return  new Discount(product, "3 for 2", -discountAmount);
         }
 
-        private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer)
+        private Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity)
         {
             if (quantityAsInt < 5)
                 return null;
             var numberOfDiscountsToApply = quantityAsInt / 5;
-            var discountTotal = unitPrice * quantity - (offer.Argument * numberOfDiscountsToApply + quantityAsInt % 5 * unitPrice);
-            return new Discount(product, 5 + " for " + offer.Argument, -discountTotal);
+            var discountTotal = unitPrice * quantity - (Argument * numberOfDiscountsToApply + quantityAsInt % 5 * unitPrice);
+            return new Discount(product, 5 + " for " + Argument, -discountTotal);
         }
 
-        private static Discount CalcultateDiscountForTenPercentDiscount(Product product, Offer offer, double quantity, double unitPrice)
+        private  Discount CalcultateDiscountForTenPercentDiscount(Product product,  double quantity, double unitPrice)
         {
-            return new Discount(product, offer.Argument + "% off", -quantity * unitPrice * offer.Argument / 100.0);
+            return new Discount(product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
         }
 
-        private static Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, Offer offer, double unitPrice, double quantity)
+        private  Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, double unitPrice, double quantity)
         {
             if (quantityAsInt < 2)
                 return null;
             
-            var total = offer.Argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
+            var total = Argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
             var discountN = unitPrice * quantity - total;
-            return new Discount(product, "2 for " + offer.Argument, -discountN);
+            return new Discount(product, "2 for " + Argument, -discountN);
         }
     }
 }

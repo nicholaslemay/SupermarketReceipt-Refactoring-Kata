@@ -41,10 +41,9 @@ namespace SupermarketReceipt
             }
 
             var sizeOfBundlesOfOfferType = quantityAsInt / quantityForOfferType;
-            if (offer.OfferType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2)
+            if (offer.OfferType == SpecialOfferType.ThreeForTwo)
             {
-                var discountAmount = quantity * unitPrice - (sizeOfBundlesOfOfferType * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
-                discount = new Discount(product, "3 for 2", -discountAmount);
+                discount = CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, quantity, unitPrice, sizeOfBundlesOfOfferType, discount);
             }
 
             if (offer.OfferType == SpecialOfferType.TenPercentDiscount)
@@ -58,6 +57,14 @@ namespace SupermarketReceipt
             }
 
             return discount;
+        }
+
+        private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice, int sizeOfBundlesOfOfferType, Discount discount)
+        {
+            if (quantityAsInt < 3)
+                return null;
+            var discountAmount = quantity * unitPrice - (sizeOfBundlesOfOfferType * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
+            return  new Discount(product, "3 for 2", -discountAmount);
         }
 
         private static Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity, Offer offer, int sizeOfBundlesOfOfferType, int quantityForOfferType)

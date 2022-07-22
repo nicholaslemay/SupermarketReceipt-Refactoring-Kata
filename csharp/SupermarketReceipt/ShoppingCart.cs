@@ -6,7 +6,6 @@ namespace SupermarketReceipt
     public class ShoppingCart
     {
         private readonly List<ProductQuantity> _items = new();
-        private readonly Dictionary<Product, double> _productQuantities = new();
 
 
         public List<ProductQuantity> GetItems() => new(_items);
@@ -17,20 +16,11 @@ namespace SupermarketReceipt
         public void AddItemQuantity(Product product, double quantity)
         {
             _items.Add(new ProductQuantity(product, quantity));
-            if (_productQuantities.ContainsKey(product))
-            {
-                var newAmount = _productQuantities[product] + quantity;
-                _productQuantities[product] = newAmount;
-            }
-            else
-            {
-                _productQuantities.Add(product, quantity);
-            }
         }
 
         public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
-            foreach (var p in _productQuantities.Keys)
+            foreach (var p in _items.Select(i=>i.Product).Distinct())
             {
                 var quantity = TotalQuantityForProduct(p);
                 var quantityAsInt = (int) quantity;

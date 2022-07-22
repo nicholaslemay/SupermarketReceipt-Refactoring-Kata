@@ -22,7 +22,7 @@ namespace SupermarketReceipt
         public SpecialOfferType OfferType { get; }
         public double Argument { get; }
 
-        public Discount CalculateDiscount(Product product, double unitPrice, double totalQuantityForProduct, ShoppingCart shoppingCart)
+        public Discount CalculateDiscount(Product product, double unitPrice, double totalQuantityForProduct)
         {
             var quantityAsInt = (int)totalQuantityForProduct;
             return this.OfferType switch

@@ -33,20 +33,20 @@ namespace SupermarketReceipt
             var offer = offers[product];
             var unitPrice = catalog.GetUnitPrice(product);
 
-            var x = CalcultateX(offer);
+            var quantityForOfferType = QuantityForOfferType(offer);
 
             if (offer.OfferType == SpecialOfferType.TwoForAmount)
             {
                 if (quantityAsInt >= 2)
                 {
-                    var total = offer.Argument * (quantityAsInt / x) + quantityAsInt % 2 * unitPrice;
+                    var total = offer.Argument * (quantityAsInt / quantityForOfferType) + quantityAsInt % 2 * unitPrice;
                     var discountN = unitPrice * quantity - total;
                     discount = new Discount(product, "2 for " + offer.Argument, -discountN);
                 }
             }
 
-            if (offer.OfferType == SpecialOfferType.FiveForAmount) x = 5;
-            var numberOfXs = quantityAsInt / x;
+            if (offer.OfferType == SpecialOfferType.FiveForAmount) quantityForOfferType = 5;
+            var numberOfXs = quantityAsInt / quantityForOfferType;
             if (offer.OfferType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2)
             {
                 var discountAmount = quantity * unitPrice - (numberOfXs * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
@@ -57,25 +57,25 @@ namespace SupermarketReceipt
             if (offer.OfferType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5)
             {
                 var discountTotal = unitPrice * quantity - (offer.Argument * numberOfXs + quantityAsInt % 5 * unitPrice);
-                discount = new Discount(product, x + " for " + offer.Argument, -discountTotal);
+                discount = new Discount(product, quantityForOfferType + " for " + offer.Argument, -discountTotal);
             }
 
             return discount;
         }
 
-        private static int CalcultateX(Offer offer)
+        private static int QuantityForOfferType(Offer offer)
         {
-            var x = 1;
+            var quantityForOfferType = 1;
             if (offer.OfferType == SpecialOfferType.ThreeForTwo)
             {
-                x = 3;
+                quantityForOfferType = 3;
             }
             else if (offer.OfferType == SpecialOfferType.TwoForAmount)
             {
-                x = 2;
+                quantityForOfferType = 2;
             }
 
-            return x;
+            return quantityForOfferType;
         }
 
         private IEnumerable<Product> UniqueItemsInCart()

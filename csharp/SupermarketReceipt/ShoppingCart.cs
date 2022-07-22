@@ -27,10 +27,9 @@ namespace SupermarketReceipt
             if (!offers.ContainsKey(product)) return null;
 
             var unitPrice = catalog.GetUnitPrice(product);
+            var quantityAsInt = (int) TotalQuantityForProduct(product);
 
             var offer = offers[product];
-
-            var quantityAsInt = (int) TotalQuantityForProduct(product);
 
             return offer.OfferType switch
             {

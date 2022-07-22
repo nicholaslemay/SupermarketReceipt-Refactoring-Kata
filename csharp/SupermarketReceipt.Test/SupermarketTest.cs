@@ -43,7 +43,7 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task one_normal_item()
         {
-            _theCart.AddItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -51,8 +51,8 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task two_normal_items()
         {
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_rice);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_rice);
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -60,9 +60,9 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task buy_two_get_one_free()
         {
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
             _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
@@ -71,11 +71,11 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task buy_five_get_one_free()
         {
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_toothbrush);
-            _theCart.AddItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
+            _theCart.AddSingleItem(_toothbrush);
             _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
@@ -92,7 +92,7 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task percent_discount()
         {
-            _theCart.AddItem(_rice);
+            _theCart.AddSingleItem(_rice);
             _teller.AddSpecialOffer(SpecialOfferType.TenPercentDiscount, _rice, 10.0);
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
@@ -101,8 +101,8 @@ namespace SupermarketReceipt.Test
         [Fact]
         public Task xForY_discount()
         {
-            _theCart.AddItem(_cherryTomatoes);
-            _theCart.AddItem(_cherryTomatoes);
+            _theCart.AddSingleItem(_cherryTomatoes);
+            _theCart.AddSingleItem(_cherryTomatoes);
             _teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99);
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));

@@ -10,7 +10,7 @@ namespace SupermarketReceipt
 
         public List<ProductQuantity> GetItems() => new(_items);
 
-        public void AddItem(Product product) => AddItemQuantity(product, 1.0);
+        public void AddSingleItem(Product product) => AddItemQuantity(product, 1.0);
 
 
         public void AddItemQuantity(Product product, double quantity)

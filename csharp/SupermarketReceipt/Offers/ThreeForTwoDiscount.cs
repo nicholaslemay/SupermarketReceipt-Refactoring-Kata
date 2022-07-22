@@ -1,4 +1,4 @@
-namespace SupermarketReceipt;
+namespace SupermarketReceipt.Offers;
 
 public class ThreeForTwoDiscount : Offer
 {

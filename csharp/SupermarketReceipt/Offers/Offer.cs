@@ -1,6 +1,6 @@
-using static SupermarketReceipt.SpecialOfferType;
+using static SupermarketReceipt.Offers.SpecialOfferType;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Offers
 {
     public enum SpecialOfferType
     {

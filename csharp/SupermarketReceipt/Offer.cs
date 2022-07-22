@@ -29,23 +29,21 @@ namespace SupermarketReceipt
     {
         protected readonly Product _product;
 
-        public Offer(SpecialOfferType offerType, Product product, double argument)
+        protected Offer(Product product, double argument)
         {
-            OfferType = offerType;
             Argument = argument;
             _product = product;
         }
 
-        protected SpecialOfferType OfferType { get; }
         protected double Argument { get; }
 
         public abstract Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct);
 
     }
 
-    class FivePerAmountOffer : Offer
+    public class FivePerAmountOffer : Offer
     {
-        public FivePerAmountOffer(Product product, double argument) : base(FiveForAmount, product, argument)
+        public FivePerAmountOffer(Product product, double argument) : base(product, argument)
         {
         }
         
@@ -60,9 +58,9 @@ namespace SupermarketReceipt
         }
     }
 
-    class TenPercentDiscountOffer : Offer
+    public class TenPercentDiscountOffer : Offer
     {
-        public TenPercentDiscountOffer(Product product, double argument) : base(TenPercentDiscount, product, argument)
+        public TenPercentDiscountOffer(Product product, double argument) : base(product, argument)
         {
         }
         
@@ -72,9 +70,9 @@ namespace SupermarketReceipt
         }
     }
 
-    class ThreeForTwoDiscount : Offer
+    public class ThreeForTwoDiscount : Offer
     {
-        public ThreeForTwoDiscount(Product product, double argument) : base(ThreeForTwo, product, argument)
+        public ThreeForTwoDiscount(Product product, double argument) : base(product, argument)
         {
         }
         public override Discount CalculateDiscount(double unitPrice, double quantity)
@@ -90,7 +88,7 @@ namespace SupermarketReceipt
 
     public class TwoForAmountOffer : Offer
     {
-        public TwoForAmountOffer(Product product, double argument) : base(TwoForAmount, product, argument)
+        public TwoForAmountOffer(Product product, double argument) : base(product, argument)
         {
         }
         

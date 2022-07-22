@@ -20,7 +20,7 @@ namespace SupermarketReceipt
 
         public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
-            foreach (var p in _items.Select(i=>i.Product).Distinct())
+            foreach (var p in UniqueItemsInCart())
             {
                 var quantity = TotalQuantityForProduct(p);
                 var quantityAsInt = (int) quantity;
@@ -66,6 +66,12 @@ namespace SupermarketReceipt
                 
             }
         }
+
+        private IEnumerable<Product> UniqueItemsInCart()
+        {
+            return _items.Select(i=>i.Product).Distinct();
+        }
+
         private double TotalQuantityForProduct(Product product) => _items.Where(i => i.Product == product).Sum(p => p.Quantity);
     }
 }

@@ -34,6 +34,11 @@ namespace SupermarketReceipt
         {
             return _discounts;
         }
+
+        public void AddDiscounts(IEnumerable<Discount> discounts)
+        {
+            _discounts.AddRange(discounts);     
+        }
     }
 
     public class ReceiptItem

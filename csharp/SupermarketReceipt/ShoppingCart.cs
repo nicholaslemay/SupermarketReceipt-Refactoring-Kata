@@ -20,14 +20,8 @@ namespace SupermarketReceipt
 
         public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
-            
-            foreach (var product in UniqueItemsInCart())
-            {
-                var discount = CalculateDiscountFor(product, offers, catalog);
-                if (discount != null)
-                    receipt.AddDiscount(discount);
-                
-            }
+            var discounts = UniqueItemsInCart().Select(p => CalculateDiscountFor(p, offers, catalog)).Where(d=> d !=null);
+            receipt.AddDiscounts(discounts);
         }
 
         private Discount CalculateDiscountFor(Product product, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)

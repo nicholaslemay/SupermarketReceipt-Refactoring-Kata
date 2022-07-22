@@ -73,10 +73,7 @@ namespace SupermarketReceipt
             };
         }
 
-        private IEnumerable<Product> UniqueItemsInCart()
-        {
-            return _items.Select(i=>i.Product).Distinct();
-        }
+        private IEnumerable<Product> UniqueItemsInCart() => _items.Select(i=>i.Product).Distinct();
 
         private double TotalQuantityForProduct(Product product) => _items.Where(i => i.Product == product).Sum(p => p.Quantity);
     }

@@ -24,19 +24,19 @@ namespace SupermarketReceipt
 
         public Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct)
         {
-            var quantityAsInt = (int)totalQuantityForProduct;
             return OfferType switch
             {
-                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(quantityAsInt, unitPrice, totalQuantityForProduct),
-                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(quantityAsInt, totalQuantityForProduct, unitPrice),
+                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
+                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(totalQuantityForProduct, unitPrice),
                 SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(totalQuantityForProduct, unitPrice),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(quantityAsInt, unitPrice, totalQuantityForProduct),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
                 _ => null
             };
         }
         
-        private Discount CalcultateDiscountForThreeForTwoDiscount(int quantityAsInt, double quantity, double unitPrice)
+        private Discount CalcultateDiscountForThreeForTwoDiscount(double quantity, double unitPrice)
         {
+            var quantityAsInt = (int)quantity;
             if (quantityAsInt < 3)
                 return null;
             var numberOfDiscountsToApply = quantityAsInt / 3;
@@ -44,8 +44,9 @@ namespace SupermarketReceipt
             return new Discount(_product, "3 for 2", -discountAmount);
         }
 
-        private Discount CalcultateDiscountForFivePerAmountDiscount(int quantityAsInt, double unitPrice, double quantity)
+        private Discount CalcultateDiscountForFivePerAmountDiscount(double unitPrice, double quantity)
         {
+            var quantityAsInt = (int)quantity;
             if (quantityAsInt < 5)
                 return null;
             var numberOfDiscountsToApply = quantityAsInt / 5;
@@ -58,8 +59,9 @@ namespace SupermarketReceipt
             return new Discount(_product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
         }
 
-        private  Discount CalcultateDiscountForTwoForAmount(int quantityAsInt, double unitPrice, double quantity)
+        private  Discount CalcultateDiscountForTwoForAmount(double unitPrice, double quantity)
         {
+            var quantityAsInt = (int)quantity;
             if (quantityAsInt < 2)
                 return null;
             

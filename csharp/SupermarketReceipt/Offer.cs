@@ -35,13 +35,13 @@ namespace SupermarketReceipt
             };
         }
         
-        private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice)
+        private Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice)
         {
             if (quantityAsInt < 3)
                 return null;
             var numberOfDiscountsToApply = quantityAsInt / 3;
             var discountAmount = quantity * unitPrice - (numberOfDiscountsToApply * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
-            return  new Discount(product, "3 for 2", -discountAmount);
+            return new Discount(_product, "3 for 2", -discountAmount);
         }
 
         private Discount CalcultateDiscountForFivePerAmountDiscount(Product product, int quantityAsInt, double unitPrice, double quantity)
@@ -50,12 +50,12 @@ namespace SupermarketReceipt
                 return null;
             var numberOfDiscountsToApply = quantityAsInt / 5;
             var discountTotal = unitPrice * quantity - (Argument * numberOfDiscountsToApply + quantityAsInt % 5 * unitPrice);
-            return new Discount(product, 5 + " for " + Argument, -discountTotal);
+            return new Discount(_product, 5 + " for " + Argument, -discountTotal);
         }
 
         private  Discount CalcultateDiscountForTenPercentDiscount(Product product,  double quantity, double unitPrice)
         {
-            return new Discount(product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
+            return new Discount(_product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
         }
 
         private  Discount CalcultateDiscountForTwoForAmount(Product product, int quantityAsInt, double unitPrice, double quantity)
@@ -65,7 +65,7 @@ namespace SupermarketReceipt
             
             var total = Argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
             var discountN = unitPrice * quantity - total;
-            return new Discount(product, "2 for " + Argument, -discountN);
+            return new Discount(_product, "2 for " + Argument, -discountN);
         }
     }
 }

@@ -1,3 +1,5 @@
+using static SupermarketReceipt.SpecialOfferType;
+
 namespace SupermarketReceipt
 {
     public enum SpecialOfferType
@@ -26,22 +28,12 @@ namespace SupermarketReceipt
         {
             return OfferType switch
             {
-                SpecialOfferType.TwoForAmount => new TwoForAmountOffer(_product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
-                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(unitPrice, totalQuantityForProduct),
-                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
-                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
+                TwoForAmount => new TwoForAmountOffer(_product, Argument).CalcultateDiscountForTwoForAmount(unitPrice, totalQuantityForProduct),
+                ThreeForTwo => new ThreeForTwoDiscount(_product, Argument).CalcultateDiscountForThreeForTwoDiscount(unitPrice, totalQuantityForProduct),
+                TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(unitPrice, totalQuantityForProduct),
+                FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(unitPrice, totalQuantityForProduct),
                 _ => null
             };
-        }
-        
-        public Discount CalcultateDiscountForThreeForTwoDiscount(double unitPrice, double quantity)
-        {
-            var quantityAsInt = (int)quantity;
-            if (quantityAsInt < 3)
-                return null;
-            var numberOfDiscountsToApply = quantityAsInt / 3;
-            var discountAmount = quantity * unitPrice - (numberOfDiscountsToApply * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
-            return new Discount(_product, "3 for 2", -discountAmount);
         }
 
         private Discount CalcultateDiscountForFivePerAmountDiscount(double unitPrice, double quantity)
@@ -61,9 +53,25 @@ namespace SupermarketReceipt
         
     }
 
+    class ThreeForTwoDiscount : Offer
+    {
+        public ThreeForTwoDiscount(Product product, double argument) : base(ThreeForTwo, product, argument)
+        {
+        }
+        public Discount CalcultateDiscountForThreeForTwoDiscount(double unitPrice, double quantity)
+        {
+            var quantityAsInt = (int)quantity;
+            if (quantityAsInt < 3)
+                return null;
+            var numberOfDiscountsToApply = quantityAsInt / 3;
+            var discountAmount = quantity * unitPrice - (numberOfDiscountsToApply * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
+            return new Discount(_product, "3 for 2", -discountAmount);
+        }
+    }
+
     public class TwoForAmountOffer : Offer
     {
-        public TwoForAmountOffer(Product product, double argument) : base(SpecialOfferType.TwoForAmount, product, argument)
+        public TwoForAmountOffer(Product product, double argument) : base(TwoForAmount, product, argument)
         {
         }
         

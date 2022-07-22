@@ -23,17 +23,18 @@ namespace SupermarketReceipt
             
             foreach (var product in UniqueItemsInCart())
             {
-                var quantity = TotalQuantityForProduct(product);
-                var discount = CalculateDiscountFor(offers, catalog, product, quantity);
+                
+                var discount = CalculateDiscountFor(offers, catalog, product);
                 if (discount != null)
                     receipt.AddDiscount(discount);
                 
             }
         }
 
-        private static Discount CalculateDiscountFor(Dictionary<Product, Offer> offers, SupermarketCatalog catalog, Product product, double quantity)
+        private Discount CalculateDiscountFor(Dictionary<Product, Offer> offers, SupermarketCatalog catalog, Product product)
         {
             Discount discount = null;
+            var quantity = TotalQuantityForProduct(product);
             var quantityAsInt = (int) quantity;
             if (offers.ContainsKey(product))
             {

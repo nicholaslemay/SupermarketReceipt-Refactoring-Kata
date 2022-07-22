@@ -10,7 +10,7 @@ namespace SupermarketReceipt
 
     public class Offer
     {
-        private Product _product;
+        private readonly Product _product;
 
         public Offer(SpecialOfferType offerType, Product product, double argument)
         {
@@ -19,8 +19,8 @@ namespace SupermarketReceipt
             _product = product;
         }
 
-        public SpecialOfferType OfferType { get; }
-        public double Argument { get; }
+        private SpecialOfferType OfferType { get; }
+        private double Argument { get; }
 
         public Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct)
         {

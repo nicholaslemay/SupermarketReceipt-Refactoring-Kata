@@ -35,28 +35,16 @@ namespace SupermarketReceipt
 
             var quantityForOfferType = QuantityForOfferType(offer.OfferType);
 
-            if (offer.OfferType == SpecialOfferType.TwoForAmount)
-            {
-                discount = CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, quantity);
-            }
-
             var sizeOfBundlesOfOfferType = quantityAsInt / quantityForOfferType;
-            if (offer.OfferType == SpecialOfferType.ThreeForTwo)
-            {
-                discount = CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, quantity, unitPrice, sizeOfBundlesOfOfferType, discount);
-            }
 
-            if (offer.OfferType == SpecialOfferType.TenPercentDiscount)
+            return offer.OfferType switch
             {
-                discount = CalcultateDiscountForTenPercentDiscount(product, offer, discount, quantity, unitPrice);
-            }
-
-            if (offer.OfferType == SpecialOfferType.FiveForAmount )
-            {
-                discount = CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, quantity, offer, sizeOfBundlesOfOfferType, quantityForOfferType);
-            }
-
-            return discount;
+                SpecialOfferType.TwoForAmount => CalcultateDiscountForTwoForAmount(product, quantityAsInt, offer, quantityForOfferType, unitPrice, quantity),
+                SpecialOfferType.ThreeForTwo => CalcultateDiscountForThreeForTwoDiscount(product, quantityAsInt, quantity, unitPrice, sizeOfBundlesOfOfferType, discount),
+                SpecialOfferType.TenPercentDiscount => CalcultateDiscountForTenPercentDiscount(product, offer, discount, quantity, unitPrice),
+                SpecialOfferType.FiveForAmount => CalcultateDiscountForFivePerAmountDiscount(product, quantityAsInt, unitPrice, quantity, offer, sizeOfBundlesOfOfferType, quantityForOfferType),
+                _ => discount
+            };
         }
 
         private static Discount CalcultateDiscountForThreeForTwoDiscount(Product product, int quantityAsInt, double quantity, double unitPrice, int sizeOfBundlesOfOfferType, Discount discount)

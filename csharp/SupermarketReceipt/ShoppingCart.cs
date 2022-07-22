@@ -31,7 +31,7 @@ namespace SupermarketReceipt
             var unitPrice = catalog.GetUnitPrice(product);
             var offer = offers[product];
 
-            return offer.CalculateDiscount(product, unitPrice, TotalQuantityForProduct(product));
+            return offer.CalculateDiscount(unitPrice, TotalQuantityForProduct(product));
         }
         
         private double TotalQuantityForProduct(Product product) => _items.Where(i => i.Product == product).Sum(p => p.Quantity);

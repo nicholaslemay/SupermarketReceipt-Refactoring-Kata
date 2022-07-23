@@ -18,6 +18,8 @@ namespace SupermarketReceipt
             _offers[product] = OfferFactory.Build(offerType, product, argument);
         }
 
+        public void AddSpecialOffer(Product product, IOffer offer) => _offers[product] = offer;
+
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
         {
             var receipt = new Receipt();

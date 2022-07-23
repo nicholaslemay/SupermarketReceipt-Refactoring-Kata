@@ -64,7 +64,7 @@ namespace SupermarketReceipt.Test
             _theCart.AddSingleItem(_toothbrush);
             _theCart.AddSingleItem(_toothbrush);
             _theCart.AddSingleItem(_toothbrush);
-            _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
+            _teller.AddSpecialOffer(_toothbrush, new ThreeForTwoDiscount(_toothbrush));
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }

@@ -17,8 +17,8 @@ public class OfferCenter
         _catalog = catalog;
     }
 
-    public IEnumerable<Discount> AllAvailableDiscountsBasedOn() =>
-        _shoppingCart.UniqueItemsInCart()
+    public IEnumerable<Discount> AllAvailableDiscountsFor(ShoppingCart shoppingCart) =>
+        shoppingCart.UniqueItemsInCart()
             .Select(CalculateDiscountFor)
             .Where(d=> d !=null);
 

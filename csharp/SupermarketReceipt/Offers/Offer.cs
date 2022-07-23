@@ -17,7 +17,7 @@ namespace SupermarketReceipt.Offers
             return offerType switch
             {
                 TwoForAmount => new TwoForAmountOffer(product, argument),
-                ThreeForTwo => new ThreeForTwoDiscount(product, argument),
+                ThreeForTwo => new ThreeForTwoDiscount(product),
                 TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
                 FiveForAmount => new FivePerAmountOffer(product, argument),
                 _ => null

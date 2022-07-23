@@ -3,11 +3,9 @@ namespace SupermarketReceipt.Offers;
 public class ThreeForTwoDiscount : Offer
 {
     private readonly Product _product;
-    private readonly double _argument;
-    public ThreeForTwoDiscount(Product product, double argument)
+    public ThreeForTwoDiscount(Product product)
     {
         _product = product;
-        _argument = argument;
     }
 
     public override Discount CalculateDiscount(double unitPrice, double quantity)

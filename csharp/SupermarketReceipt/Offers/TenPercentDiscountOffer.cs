@@ -4,6 +4,7 @@ public class TenPercentDiscountOffer : Offer
 {
     private readonly Product _product;
     private readonly double _argument;
+    
     public TenPercentDiscountOffer(Product product, double argument)
     {
         _product = product;

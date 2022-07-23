@@ -11,7 +11,6 @@ public class TwoForAmountOffer : Offer
         _argument = argument;
     }
 
-
     public override Discount CalculateDiscount(double unitPrice, double quantity)
     {
         var quantityAsInt = (int)quantity;

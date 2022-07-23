@@ -27,12 +27,9 @@ namespace SupermarketReceipt.Offers
 
     public abstract class Offer
     {
-        protected readonly Product _product;
-
-        protected Offer(Product product, double argument)
+        protected Offer(double argument)
         {
             Argument = argument;
-            _product = product;
         }
 
         protected double Argument { get; }

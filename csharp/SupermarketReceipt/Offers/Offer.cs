@@ -1,13 +1,5 @@
 namespace SupermarketReceipt.Offers
 {
-    public enum SpecialOfferType
-    {
-        ThreeForTwo,
-        TenPercentDiscount,
-        TwoForAmount,
-        FiveForAmount
-    }
-
     public interface IOffer
     {
         Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct);

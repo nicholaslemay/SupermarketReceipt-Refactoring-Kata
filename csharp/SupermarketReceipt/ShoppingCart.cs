@@ -15,17 +15,17 @@ namespace SupermarketReceipt
         public void AddItemQuantity(Product product, double quantity) => 
             _items.Add(new ProductQuantity(product, quantity));
 
-        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog) => 
+        public void HandleOffers(Receipt receipt, Dictionary<Product, IOffer> offers, SupermarketCatalog catalog) => 
             receipt.AddDiscounts(AllAvailableDiscountsBasedOn(offers, catalog));
 
-        private IEnumerable<Discount> AllAvailableDiscountsBasedOn(Dictionary<Product, Offer> offers, SupermarketCatalog catalog) => 
+        private IEnumerable<Discount> AllAvailableDiscountsBasedOn(Dictionary<Product, IOffer> offers, SupermarketCatalog catalog) => 
             UniqueItemsInCart()
                 .Select(p => CalculateDiscountFor(p, offers, catalog))
                 .Where(d=> d !=null);
 
         private IEnumerable<Product> UniqueItemsInCart() => _items.Select(i=>i.Product).Distinct();
 
-        private Discount CalculateDiscountFor(Product product, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
+        private Discount CalculateDiscountFor(Product product, Dictionary<Product, IOffer> offers, SupermarketCatalog catalog)
         {
             if (!offers.ContainsKey(product)) return null;
 

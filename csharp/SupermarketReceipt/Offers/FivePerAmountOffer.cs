@@ -1,6 +1,6 @@
 namespace SupermarketReceipt.Offers;
 
-public class FivePerAmountOffer : Offer
+public class FivePerAmountOffer : IOffer
 {
     private readonly Product _product;
     private readonly double _argument;
@@ -11,7 +11,7 @@ public class FivePerAmountOffer : Offer
         _argument = argument;
     }
 
-    public override Discount CalculateDiscount(double unitPrice, double quantity)
+    public Discount CalculateDiscount(double unitPrice, double quantity)
     {
         var quantityAsInt = (int)quantity;
         if (quantityAsInt < 5)

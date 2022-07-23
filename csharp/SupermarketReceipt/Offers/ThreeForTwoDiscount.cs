@@ -1,6 +1,6 @@
 namespace SupermarketReceipt.Offers;
 
-public class ThreeForTwoDiscount : Offer
+public class ThreeForTwoDiscount : IOffer
 {
     private readonly Product _product;
     public ThreeForTwoDiscount(Product product)
@@ -8,7 +8,7 @@ public class ThreeForTwoDiscount : Offer
         _product = product;
     }
 
-    public override Discount CalculateDiscount(double unitPrice, double quantity)
+    public Discount CalculateDiscount(double unitPrice, double quantity)
     {
         var quantityAsInt = (int)quantity;
         if (quantityAsInt < 3)

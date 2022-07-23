@@ -12,7 +12,7 @@ namespace SupermarketReceipt.Offers
 
     public static class OfferFactory
     {
-        public static Offer Build(SpecialOfferType offerType, Product product, double argument)
+        public static IOffer Build(SpecialOfferType offerType, Product product, double argument)
         {
             return offerType switch
             {
@@ -25,7 +25,12 @@ namespace SupermarketReceipt.Offers
         }
     }
 
-    public abstract class Offer
+    public interface IOffer
+    {
+        Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct);
+    }
+
+    public abstract class Offer : IOffer
     {
         public abstract Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct);
     }

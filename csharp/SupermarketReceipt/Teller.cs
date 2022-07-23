@@ -6,7 +6,7 @@ namespace SupermarketReceipt
     public class Teller
     {
         private readonly SupermarketCatalog _catalog;
-        private readonly Dictionary<Product, Offer> _offers = new Dictionary<Product, Offer>();
+        private readonly Dictionary<Product, IOffer> _offers = new ();
 
         public Teller(SupermarketCatalog catalog)
         {

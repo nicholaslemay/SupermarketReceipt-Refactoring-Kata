@@ -1,6 +1,6 @@
 namespace SupermarketReceipt.Offers;
 
-public class PercentDiscountOffer : Offer
+public class PercentDiscountOffer : IOffer
 {
     private readonly Product _product;
     private readonly double _percentage;
@@ -11,7 +11,7 @@ public class PercentDiscountOffer : Offer
         _percentage = percentage;
     }
 
-    public override Discount CalculateDiscount(double unitPrice, double quantity)
+    public Discount CalculateDiscount(double unitPrice, double quantity)
     {
         return new Discount(_product, _percentage + "% off", -quantity * unitPrice * _percentage / 100.0);
     }

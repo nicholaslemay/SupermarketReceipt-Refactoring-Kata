@@ -104,7 +104,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddSingleItem(_cherryTomatoes);
             _theCart.AddSingleItem(_cherryTomatoes);
-            _teller.AddSpecialOffer(_cherryTomatoes, new TwoForAmountOffer(_cherryTomatoes, .99));
+            _teller.AddSpecialOffer(_cherryTomatoes, new QuantityForAmountOffer(_cherryTomatoes, 2, .99));
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }

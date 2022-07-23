@@ -18,7 +18,7 @@ namespace SupermarketReceipt.Offers
             {
                 TwoForAmount => new TwoForAmountOffer(product, argument),
                 ThreeForTwo => new ThreeForTwoDiscount(product),
-                TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
+                TenPercentDiscount => new PercentDiscountOffer(product, argument),
                 FiveForAmount => new FivePerAmountOffer(product, argument),
                 _ => null
             };

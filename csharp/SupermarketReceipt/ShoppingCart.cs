@@ -18,7 +18,7 @@ namespace SupermarketReceipt
         public void HandleOffers(Receipt receipt, Dictionary<Product, IOffer> offers, SupermarketCatalog catalog) => 
             receipt.AddDiscounts(AllAvailableDiscountsBasedOn(offers, catalog));
 
-        private IEnumerable<Discount> AllAvailableDiscountsBasedOn(Dictionary<Product, IOffer> offers, SupermarketCatalog catalog) => 
+        public IEnumerable<Discount> AllAvailableDiscountsBasedOn(Dictionary<Product, IOffer> offers, SupermarketCatalog catalog) => 
             UniqueItemsInCart()
                 .Select(p => CalculateDiscountFor(p, offers, catalog))
                 .Where(d=> d !=null);

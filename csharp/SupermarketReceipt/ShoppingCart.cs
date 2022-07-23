@@ -7,13 +7,6 @@ namespace SupermarketReceipt
     {
         private readonly List<ProductQuantity> _items = new();
 
-        public ShoppingCart()
-        {
-            OfferCenter = new OfferCenter(this);
-        }
-
-        public OfferCenter OfferCenter { get; }
-
         public List<ProductQuantity> GetItems() => new(_items);
 
         public void AddSingleItem(Product product) => AddItemQuantity(product, 1.0);

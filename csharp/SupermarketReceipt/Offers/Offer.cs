@@ -27,14 +27,6 @@ namespace SupermarketReceipt.Offers
 
     public abstract class Offer
     {
-        protected Offer(double argument)
-        {
-            Argument = argument;
-        }
-
-        protected double Argument { get; }
-
         public abstract Discount CalculateDiscount(double unitPrice, double totalQuantityForProduct);
-
     }
 }

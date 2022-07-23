@@ -3,14 +3,15 @@ namespace SupermarketReceipt.Offers;
 public class TenPercentDiscountOffer : Offer
 {
     private readonly Product _product;
-
-    public TenPercentDiscountOffer(Product product, double argument) : base(argument)
+    private readonly double _argument;
+    public TenPercentDiscountOffer(Product product, double argument)
     {
         _product = product;
+        _argument = argument;
     }
-        
+
     public override Discount CalculateDiscount(double unitPrice, double quantity)
     {
-        return new Discount(_product, Argument + "% off", -quantity * unitPrice * Argument / 100.0);
+        return new Discount(_product, _argument + "% off", -quantity * unitPrice * _argument / 100.0);
     }
 }

@@ -17,16 +17,16 @@ public class OfferCenter
 
     public IEnumerable<Discount> AllAvailableDiscountsFor(ShoppingCart shoppingCart) =>
         shoppingCart.UniqueItemsInCart()
+            .Where(ProductcurrentlyHasAnOffer)
             .Select(p=> CalculateDiscountFor(p, shoppingCart))
             .Where(d=> d !=null);
 
     private Discount CalculateDiscountFor(Product product, ShoppingCart shoppingCart)
     {
-        if (!_offers.ContainsKey(product)) return null;
-
-        var unitPrice = _catalog.GetUnitPrice(product);
         var offer = _offers[product];
 
-        return offer.CalculateDiscount(unitPrice, shoppingCart.TotalQuantityForProduct(product));
+        return offer.CalculateDiscount(_catalog.GetUnitPrice(product), shoppingCart.TotalQuantityForProduct(product));
     }
+
+    private bool ProductcurrentlyHasAnOffer(Product p) => _offers.ContainsKey(p);
 }

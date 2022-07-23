@@ -6,13 +6,11 @@ namespace SupermarketReceipt;
 
 public class OfferCenter
 {
-    private readonly ShoppingCart _shoppingCart;
     private readonly Dictionary<Product, IOffer> _offers;
     private readonly SupermarketCatalog _catalog;
 
-    public OfferCenter(ShoppingCart shoppingCart, Dictionary<Product, IOffer> offers, SupermarketCatalog catalog)
+    public OfferCenter(Dictionary<Product, IOffer> offers, SupermarketCatalog catalog)
     {
-        _shoppingCart = shoppingCart;
         _offers = offers;
         _catalog = catalog;
     }

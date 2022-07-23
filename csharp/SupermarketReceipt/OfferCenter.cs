@@ -15,7 +15,7 @@ public class OfferCenter
         _catalog = catalog;
     }
 
-    public IEnumerable<Discount> AllAvailableDiscountsFor(ShoppingCart shoppingCart) =>
+    public IEnumerable<Discount> IndividualProductDiscountsFor(ShoppingCart shoppingCart) =>
         shoppingCart.UniqueItemsInCart()
             .Where(ProductcurrentlyHasAnOffer)
             .Select(p=> CalculateDiscountFor(p, shoppingCart))
@@ -29,4 +29,6 @@ public class OfferCenter
     }
 
     private bool ProductcurrentlyHasAnOffer(Product p) => _offers.ContainsKey(p);
+
+    public IEnumerable<Discount> BundledProductDiscountsFor(ShoppingCart theCart) => new List<Discount>();
 }

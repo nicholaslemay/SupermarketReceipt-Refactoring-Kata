@@ -7,7 +7,7 @@ namespace SupermarketReceipt;
 public class OfferCenter
 {
     private readonly ShoppingCart _shoppingCart;
-    private Dictionary<Product, IOffer> _offers;
+    private readonly Dictionary<Product, IOffer> _offers;
     private readonly SupermarketCatalog _catalog;
 
     public OfferCenter(ShoppingCart shoppingCart, Dictionary<Product, IOffer> offers, SupermarketCatalog catalog)
@@ -19,7 +19,7 @@ public class OfferCenter
 
     public IEnumerable<Discount> AllAvailableDiscountsBasedOn() =>
         _shoppingCart.UniqueItemsInCart()
-            .Select(p => CalculateDiscountFor(p))
+            .Select(CalculateDiscountFor)
             .Where(d=> d !=null);
 
     private Discount CalculateDiscountFor(Product product)

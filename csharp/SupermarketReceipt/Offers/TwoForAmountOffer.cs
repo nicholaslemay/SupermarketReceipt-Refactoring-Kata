@@ -3,12 +3,12 @@ namespace SupermarketReceipt.Offers;
 public class TwoForAmountOffer : Offer
 {
     private readonly Product _product;
-    private readonly double _argument;
+    private readonly double _discountedPrice;
     
-    public TwoForAmountOffer(Product product, double argument)
+    public TwoForAmountOffer(Product product, double discountedPrice)
     {
         _product = product;
-        _argument = argument;
+        _discountedPrice = discountedPrice;
     }
 
     public override Discount CalculateDiscount(double unitPrice, double quantity)
@@ -17,9 +17,9 @@ public class TwoForAmountOffer : Offer
         if (quantityAsInt < 2)
             return null;
             
-        var total = _argument * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
+        var total = _discountedPrice * (quantityAsInt / 2) + quantityAsInt % 2 * unitPrice;
         var discountN = unitPrice * quantity - total;
-        return new Discount(_product, "2 for " + _argument, -discountN);
+        return new Discount(_product, "2 for " + _discountedPrice, -discountN);
     }
         
 }

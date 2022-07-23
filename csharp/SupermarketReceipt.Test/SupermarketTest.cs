@@ -94,7 +94,7 @@ namespace SupermarketReceipt.Test
         public Task percent_discount()
         {
             _theCart.AddSingleItem(_rice);
-            _teller.AddSpecialOffer(SpecialOfferType.TenPercentDiscount, _rice, 10.0);
+            _teller.AddSpecialOffer(_rice, new PercentDiscountOffer(_rice, 10.0));
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -104,7 +104,7 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddSingleItem(_cherryTomatoes);
             _theCart.AddSingleItem(_cherryTomatoes);
-            _teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99);
+            _teller.AddSpecialOffer(_cherryTomatoes, new TwoForAmountOffer(_cherryTomatoes, .99));
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }

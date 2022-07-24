@@ -42,12 +42,19 @@ namespace SupermarketReceipt
     
     public class BundleOffer
     {
-        public BundleOffer(double percentage, params Product[] toothbrush)
+        private readonly double _percentage;
+        private readonly Product[] _products;
+
+        public BundleOffer(double percentage, params Product[] products)
         {
+            _percentage = percentage;
+            _products = products;
         }
 
         public Discount CalculateDiscount(ShoppingCart theCart)
         {
+            if(theCart.UniqueItemsInCart().Contains(_products[0]))
+                return new(_products[0], _percentage + "% off", 0);
             return null;
         }
     }

@@ -53,8 +53,9 @@ namespace SupermarketReceipt
 
         public Discount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
         {
+            
             if(theCart.UniqueItemsInCart().Contains(_products[0]))
-                return new(_products[0], _percentage + "% off", -1 * catalog.GetUnitPrice(_products[0]) * _percentage / 100.0);
+                return new(_products[0], _percentage + "% off", -theCart.TotalQuantityForProduct(_products[0]) * catalog.GetUnitPrice(_products[0]) * _percentage / 100.0);
             return null;
         }
     }

@@ -5,7 +5,7 @@ public class ThreeForTwoDiscount : IOffer
     private readonly Product _product;
     public ThreeForTwoDiscount(Product product) => _product = product;
 
-    public Discount CalculateDiscount(double unitPrice, double quantity)
+    public IDiscount CalculateDiscount(double unitPrice, double quantity)
     {
         var quantityAsInt = (int)quantity;
         if (quantityAsInt < 3)

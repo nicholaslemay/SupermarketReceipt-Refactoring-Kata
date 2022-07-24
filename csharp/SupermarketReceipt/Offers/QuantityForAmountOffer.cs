@@ -13,7 +13,7 @@ public class QuantityForAmountOffer : IOffer
         _quantityElligibleForDiscount = quantityElligibleForDiscount;
     }
 
-    public Discount CalculateDiscount(double unitPrice, double quantity)
+    public IDiscount CalculateDiscount(double unitPrice, double quantity)
     {
         var quantityAsInt = (int)quantity;
         

@@ -17,13 +17,13 @@ public class OfferCenter
         _catalog = catalog;
     }
 
-    public IEnumerable<Discount> IndividualProductDiscountsFor(ShoppingCart shoppingCart) =>
+    public IEnumerable<IDiscount> IndividualProductDiscountsFor(ShoppingCart shoppingCart) =>
         shoppingCart.UniqueItemsInCart()
             .Where(ProductcurrentlyHasAnOffer)
             .Select(p=> CalculateDiscountFor(p, shoppingCart))
             .Where(d=> d !=null);
 
-    private Discount CalculateDiscountFor(Product product, ShoppingCart shoppingCart)
+    private IDiscount CalculateDiscountFor(Product product, ShoppingCart shoppingCart)
     {
         var offer = _offers[product];
 
@@ -32,7 +32,7 @@ public class OfferCenter
 
     private bool ProductcurrentlyHasAnOffer(Product p) => _offers.ContainsKey(p);
 
-    public IEnumerable<Discount> BundledProductDiscountsFor(ShoppingCart theCart)
+    public IEnumerable<IDiscount> BundledProductDiscountsFor(ShoppingCart theCart)
     {
         return _bundleOffers.Select(o => o.CalculateDiscount(theCart, _catalog)).Where(d=> d!=null).ToList();
     }

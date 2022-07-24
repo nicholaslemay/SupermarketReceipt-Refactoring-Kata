@@ -53,17 +53,16 @@ namespace SupermarketReceipt
 
         public Discount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
         {
-            var countPerProduct = _products.Select(theCart.TotalQuantityForProduct);
-            if (countPerProduct.Any(c => c == 0))
-                return null;
-
-            return new BundlesProductsDiscount(_products.ToList(), _percentage + "% off", -TotalCostOfSingleBundle(catalog) * _percentage / 100.0);
+            var qtyPerProduct = _products.Select(theCart.TotalQuantityForProduct);
+            if (AllItemsInBundlePurchased(qtyPerProduct))
+               return new BundlesProductsDiscount(_products.ToList(), _percentage + "% off", -TotalCostOfSingleBundle(catalog) * _percentage / 100.0);
+            
+            return null;
         }
 
-        private double TotalCostOfSingleBundle(SupermarketCatalog catalog)
-        {
-            return _products.Sum(catalog.GetUnitPrice);
-        }
+        private static bool AllItemsInBundlePurchased(IEnumerable<double> qtyPerProduct) => qtyPerProduct.All(c => c > 0);
+
+        private double TotalCostOfSingleBundle(SupermarketCatalog catalog) => _products.Sum(catalog.GetUnitPrice);
     }
         
 }

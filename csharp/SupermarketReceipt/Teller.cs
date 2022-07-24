@@ -58,7 +58,7 @@ namespace SupermarketReceipt
             return null;
         }
 
-        public double TotalCostOfSingleBundle(SupermarketCatalog catalog)
+        private double TotalCostOfSingleBundle(SupermarketCatalog catalog)
         {
             return _products.Sum(catalog.GetUnitPrice);
         }

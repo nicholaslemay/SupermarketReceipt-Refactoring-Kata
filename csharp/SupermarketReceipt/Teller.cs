@@ -55,11 +55,18 @@ namespace SupermarketReceipt
         {
             var minimumQtyPurchasedOfEachProduct = _products.Select(theCart.TotalQuantityForProduct).Min();
             var numberOfbundlesToApply = minimumQtyPurchasedOfEachProduct;
+            
             if (AllItemsInBundlePurchased(minimumQtyPurchasedOfEachProduct))
-               return new BundlesProductsDiscount(_products.ToList(), $"{numberOfbundlesToApply} * {_percentage} % off ", -TotalCostOfSingleBundle(catalog) * numberOfbundlesToApply * _percentage / 100.0);
+               return new BundlesProductsDiscount(_products.ToList(), Description(numberOfbundlesToApply), DiscountAmount(catalog, numberOfbundlesToApply));
             
             return null;
         }
+
+        private string Description(double numberOfbundlesToApply) => 
+            $"{numberOfbundlesToApply} * {_percentage} % off ";
+
+        private double DiscountAmount(SupermarketCatalog catalog, double numberOfbundlesToApply) => 
+            -TotalCostOfSingleBundle(catalog) * numberOfbundlesToApply * _percentage / 100.0;
 
         private static bool AllItemsInBundlePurchased(double min) => min > 0;
 

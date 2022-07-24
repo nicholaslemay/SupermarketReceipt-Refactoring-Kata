@@ -51,11 +51,10 @@ namespace SupermarketReceipt
             _products = products;
         }
 
-        public IndividualProductDiscount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
+        public Discount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
         {
-            
             if(theCart.UniqueItemsInCart().Contains(_products[0]))
-                return new(_products[0], _percentage + "% off", -theCart.TotalQuantityForProduct(_products[0]) * catalog.GetUnitPrice(_products[0]) * _percentage / 100.0);
+                return new BundlesProductsDiscount(_products.ToList(), _percentage + "% off", -theCart.TotalQuantityForProduct(_products[0]) * catalog.GetUnitPrice(_products[0]) * _percentage / 100.0);
             return null;
         }
     }

@@ -34,6 +34,6 @@ public class OfferCenter
 
     public IEnumerable<Discount> BundledProductDiscountsFor(ShoppingCart theCart)
     {
-        return _bundleOffers.Select(o => o.CalculateDiscount(theCart)).Where(d=> d!=null).ToList();
+        return _bundleOffers.Select(o => o.CalculateDiscount(theCart, _catalog)).Where(d=> d!=null).ToList();
     }
 }

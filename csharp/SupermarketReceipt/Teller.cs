@@ -54,9 +54,9 @@ namespace SupermarketReceipt
         public Discount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
         {
             var minimumQtyPurchasedOfEachProduct = _products.Select(theCart.TotalQuantityForProduct).Min();
-            var numbleOfBundlesToApply = minimumQtyPurchasedOfEachProduct;
+            var numberOfbundlesToApply = minimumQtyPurchasedOfEachProduct;
             if (AllItemsInBundlePurchased(minimumQtyPurchasedOfEachProduct))
-               return new BundlesProductsDiscount(_products.ToList(), $"{numbleOfBundlesToApply} * {_percentage} % off ", -TotalCostOfSingleBundle(catalog) * numbleOfBundlesToApply * _percentage / 100.0);
+               return new BundlesProductsDiscount(_products.ToList(), $"{numberOfbundlesToApply} * {_percentage} % off ", -TotalCostOfSingleBundle(catalog) * numberOfbundlesToApply * _percentage / 100.0);
             
             return null;
         }

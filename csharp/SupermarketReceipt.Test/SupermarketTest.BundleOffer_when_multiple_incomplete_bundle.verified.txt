@@ -1,0 +1,7 @@
+﻿toothbrush                          2.97
+  0.99 * 3
+toothpaste                          2.00
+  1.00 * 2
+2 * 10 % off (toothbrush,toothpaste)-0.40
+
+Total:                              4.57

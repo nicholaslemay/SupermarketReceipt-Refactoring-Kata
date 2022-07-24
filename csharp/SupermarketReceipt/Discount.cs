@@ -1,6 +1,12 @@
 namespace SupermarketReceipt
 {
-    public class Discount
+    public interface IDiscount
+    {
+        string Description { get; }
+        double DiscountAmount { get; }
+    }
+
+    public class Discount : IDiscount
     {
         private readonly string _description;
         private readonly Product _product;

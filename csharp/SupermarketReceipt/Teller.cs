@@ -31,5 +31,17 @@ namespace SupermarketReceipt
 
             return receipt;
         }
+
+        public void AddBundleOffer(BundleOffer bundleOffer)
+        {
+            
+        }
+    }
+    
+    public class BundleOffer
+    {
+        public BundleOffer(double percentage, params Product[] toothbrush)
+        {
+        }
     }
 }

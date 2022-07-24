@@ -13,6 +13,7 @@ namespace SupermarketReceipt.Test
         private readonly Teller _teller;
         private readonly ShoppingCart _theCart;
         private readonly Product _toothbrush;
+        private readonly Product _toothpaste;
         private readonly Product _rice;
         private readonly Product _apples;
         private readonly Product _cherryTomatoes;
@@ -25,6 +26,8 @@ namespace SupermarketReceipt.Test
 
             _toothbrush = new Product("toothbrush", ProductUnit.Each);
             _catalog.AddProduct(_toothbrush, 0.99);
+            _toothpaste = new Product("toothpaste", ProductUnit.Each);
+            _catalog.AddProduct(_toothpaste, 1.00);
             _rice = new Product("rice", ProductUnit.Each);
             _catalog.AddProduct(_rice, 2.99);
             _apples = new Product("apples", ProductUnit.Kilo);
@@ -144,5 +147,15 @@ namespace SupermarketReceipt.Test
             var receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
+
+        [Fact]
+        public Task BundleOffer_without_any_match()
+        {
+            _teller.AddBundleOffer(new BundleOffer(10.0, _toothbrush, _toothpaste));
+            _theCart.AddSingleItem(_rice);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+        
     }
 }

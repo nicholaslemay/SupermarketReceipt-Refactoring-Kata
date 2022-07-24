@@ -2,17 +2,17 @@ namespace SupermarketReceipt
 {
     public class Discount
     {
-        private string _description;
-
+        private readonly string _description;
+        private readonly Product _product;
+        
         public Discount(Product product, string description, double discountAmount)
         {
             _description = description;
-            Product = product;
+            _product = product;
             DiscountAmount = discountAmount;
         }
 
-        public string Description => $"{_description}({Product.Name})"; 
+        public string Description => $"{_description}({_product.Name})"; 
         public double DiscountAmount { get; }
-        public Product Product { get; }
     }
 }

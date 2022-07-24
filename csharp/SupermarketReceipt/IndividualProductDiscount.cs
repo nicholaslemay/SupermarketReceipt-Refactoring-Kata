@@ -2,7 +2,7 @@ namespace SupermarketReceipt
 {
     public abstract class Discount
     {
-        public Discount(string description, double discountAmount)
+        protected Discount(string description, double discountAmount)
         {
             Description = description;
             DiscountAmount = discountAmount;

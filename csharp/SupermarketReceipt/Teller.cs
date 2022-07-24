@@ -26,7 +26,7 @@ namespace SupermarketReceipt
                 receipt.AddProduct(p, quantity, unitPrice, price);
             }
 
-            var offerCenter = new OfferCenter(_offers, _catalog);
+            var offerCenter = new OfferCenter(_offers, _bundleOffers, _catalog);
             receipt.AddDiscounts(offerCenter.IndividualProductDiscountsFor(theCart));
             receipt.AddDiscounts(offerCenter.BundledProductDiscountsFor(theCart));
 

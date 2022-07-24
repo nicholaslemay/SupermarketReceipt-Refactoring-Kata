@@ -7,11 +7,13 @@ namespace SupermarketReceipt;
 public class OfferCenter
 {
     private readonly Dictionary<Product, IOffer> _offers;
+    private readonly List<BundleOffer> _bundleOffers;
     private readonly SupermarketCatalog _catalog;
 
-    public OfferCenter(Dictionary<Product, IOffer> offers, SupermarketCatalog catalog)
+    public OfferCenter(Dictionary<Product, IOffer> offers, List<BundleOffer> bundleOffers, SupermarketCatalog catalog)
     {
         _offers = offers;
+        _bundleOffers = bundleOffers;
         _catalog = catalog;
     }
 

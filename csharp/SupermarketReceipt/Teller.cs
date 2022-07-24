@@ -7,6 +7,7 @@ namespace SupermarketReceipt
     {
         private readonly SupermarketCatalog _catalog;
         private readonly Dictionary<Product, IOffer> _offers = new ();
+        private readonly List<BundleOffer> _bundleOffers = new();
 
         public Teller(SupermarketCatalog catalog) => _catalog = catalog;
 
@@ -34,7 +35,7 @@ namespace SupermarketReceipt
 
         public void AddBundleOffer(BundleOffer bundleOffer)
         {
-            
+            _bundleOffers.Add(bundleOffer);
         }
     }
     

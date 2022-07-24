@@ -186,5 +186,15 @@ namespace SupermarketReceipt.Test
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
         
+        [Fact]
+        public Task BundleOffer_when_partial_pruchase_of_bundle()
+        {
+            _teller.AddBundleOffer(new BundleOffer(10.0, _toothbrush, _toothpaste));
+           
+            _theCart.AddItemQuantity(_toothbrush, 1);
+            _theCart.AddItemQuantity(_rice, 1);
+            var receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
     }
 }

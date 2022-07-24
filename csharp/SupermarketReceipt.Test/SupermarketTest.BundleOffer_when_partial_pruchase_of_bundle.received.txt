@@ -1,5 +1,0 @@
-﻿toothbrush                          0.99
-rice                                2.99
-10% off(toothbrush,toothpaste)     -0.20
-
-Total:                              3.78

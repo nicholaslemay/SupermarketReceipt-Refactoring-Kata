@@ -1,5 +1,5 @@
 ﻿toothbrush                          4.95
   0.99 * 5
-10% off(toothbrush)                -0.10
+5 * 10 % off (toothbrush)          -0.49
 
-Total:                              4.85
+Total:                              4.46

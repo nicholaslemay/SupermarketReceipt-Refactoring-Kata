@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using SupermarketReceipt.Offers;
 
 namespace SupermarketReceipt
@@ -43,6 +44,11 @@ namespace SupermarketReceipt
     {
         public BundleOffer(double percentage, params Product[] toothbrush)
         {
+        }
+
+        public Discount CalculateDiscount(ShoppingCart theCart)
+        {
+            return null;
         }
     }
 }

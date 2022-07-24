@@ -32,5 +32,8 @@ public class OfferCenter
 
     private bool ProductcurrentlyHasAnOffer(Product p) => _offers.ContainsKey(p);
 
-    public IEnumerable<Discount> BundledProductDiscountsFor(ShoppingCart theCart) => new List<Discount>();
+    public IEnumerable<Discount> BundledProductDiscountsFor(ShoppingCart theCart)
+    {
+        return _bundleOffers.Select(o => o.CalculateDiscount(theCart)).Where(d=> d!=null).ToList();
+    }
 }

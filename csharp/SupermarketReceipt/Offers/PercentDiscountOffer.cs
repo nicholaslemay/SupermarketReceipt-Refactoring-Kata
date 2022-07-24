@@ -11,6 +11,6 @@ public class PercentDiscountOffer : IOffer
         _percentage = percentage;
     }
 
-    public IDiscount CalculateDiscount(double unitPrice, double quantity) => 
-        new Discount(_product, _percentage + "% off", -quantity * unitPrice * _percentage / 100.0);
+    public Discount CalculateDiscount(double unitPrice, double quantity) => 
+        new IndividualProductDiscount(_product, _percentage + "% off", -quantity * unitPrice * _percentage / 100.0);
 }

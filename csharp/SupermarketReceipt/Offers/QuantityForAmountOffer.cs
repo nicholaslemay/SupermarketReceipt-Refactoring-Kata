@@ -13,7 +13,7 @@ public class QuantityForAmountOffer : IOffer
         _quantityElligibleForDiscount = quantityElligibleForDiscount;
     }
 
-    public IDiscount CalculateDiscount(double unitPrice, double quantity)
+    public Discount CalculateDiscount(double unitPrice, double quantity)
     {
         var quantityAsInt = (int)quantity;
         
@@ -21,6 +21,6 @@ public class QuantityForAmountOffer : IOffer
             return null;
         var numberOfDiscountsToApply = quantityAsInt / _quantityElligibleForDiscount;
         var discountTotal = unitPrice * quantity - (_discountedAmount * numberOfDiscountsToApply + quantityAsInt % _quantityElligibleForDiscount * unitPrice);
-        return new Discount(_product, _quantityElligibleForDiscount + " for " + _discountedAmount, -discountTotal);
+        return new IndividualProductDiscount(_product, _quantityElligibleForDiscount + " for " + _discountedAmount, -discountTotal);
     }
 }

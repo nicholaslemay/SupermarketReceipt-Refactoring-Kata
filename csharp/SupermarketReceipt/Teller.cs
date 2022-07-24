@@ -51,7 +51,7 @@ namespace SupermarketReceipt
             _products = products;
         }
 
-        public Discount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
+        public IndividualProductDiscount CalculateDiscount(ShoppingCart theCart, SupermarketCatalog catalog)
         {
             
             if(theCart.UniqueItemsInCart().Contains(_products[0]))

@@ -4,7 +4,7 @@ namespace SupermarketReceipt
 {
     public class Receipt
     {
-        private readonly List<IDiscount> _discounts = new();
+        private readonly List<Discount> _discounts = new();
         private readonly List<ReceiptItem> _items = new();
 
         public double GetTotalPrice()
@@ -25,17 +25,17 @@ namespace SupermarketReceipt
             return new List<ReceiptItem>(_items);
         }
 
-        public void AddDiscount(IDiscount discount)
+        public void AddDiscount(Discount discount)
         {
             _discounts.Add(discount);
         }
 
-        public List<IDiscount> GetDiscounts()
+        public List<Discount> GetDiscounts()
         {
             return _discounts;
         }
 
-        public void AddDiscounts(IEnumerable<IDiscount> discounts)
+        public void AddDiscounts(IEnumerable<Discount> discounts)
         {
             _discounts.AddRange(discounts);     
         }

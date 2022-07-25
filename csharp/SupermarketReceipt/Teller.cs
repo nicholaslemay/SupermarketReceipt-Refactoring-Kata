@@ -1,21 +1,17 @@
 using System.Collections.Generic;
+using SupermarketReceipt.Offers;
 
 namespace SupermarketReceipt
 {
     public class Teller
     {
         private readonly SupermarketCatalog _catalog;
-        private readonly Dictionary<Product, Offer> _offers = new Dictionary<Product, Offer>();
+        private readonly Dictionary<Product, IOffer> _offers = new ();
+        private readonly List<BundleOffer> _bundleOffers = new();
 
-        public Teller(SupermarketCatalog catalog)
-        {
-            _catalog = catalog;
-        }
+        public Teller(SupermarketCatalog catalog) => _catalog = catalog;
 
-        public void AddSpecialOffer(SpecialOfferType offerType, Product product, double argument)
-        {
-            _offers[product] = new Offer(offerType, product, argument);
-        }
+        public void AddSpecialOffer(Product product, IOffer offer) => _offers[product] = offer;
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
         {
@@ -30,9 +26,16 @@ namespace SupermarketReceipt
                 receipt.AddProduct(p, quantity, unitPrice, price);
             }
 
-            theCart.HandleOffers(receipt, _offers, _catalog);
+            var offerCenter = new OfferCenter(_offers, _bundleOffers, _catalog);
+            receipt.AddDiscounts(offerCenter.IndividualProductDiscountsFor(theCart));
+            receipt.AddDiscounts(offerCenter.BundledProductDiscountsFor(theCart));
 
             return receipt;
+        }
+
+        public void AddBundleOffer(BundleOffer bundleOffer)
+        {
+            _bundleOffers.Add(bundleOffer);
         }
     }
 }
